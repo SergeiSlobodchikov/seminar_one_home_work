@@ -16,13 +16,21 @@ def TenTask():
         if monetka == money[0]:
             orel += 1 
         else:
-            reshka += 1
-    if orel > reshka:
+            reshka += 1  
+    if orel == 0 or reshka == 0:
+        if orel == 0:
+            storona = money[1]
+        else:
+            storona = money[0]
+        print(f'Не нужно переворачивать так как все лежат стороной {storona}')
+    elif orel == reshka:
+        print(f'Нужно перевернуть какие хотите их по {reshka} шт.')
+    elif orel > reshka:
         print(f'Нужно перевернуть стороной решки так как их меньше {reshka} шт.')
     else: 
         print(f'Нужно перевернуть стороной орла так как их меньше {orel} шт.')
 
-# TenTask()
+TenTask()
 
 
 
