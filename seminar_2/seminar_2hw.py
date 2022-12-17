@@ -1,42 +1,47 @@
+import random
 # 1.Напишите программу, которая принимает на вход вещественное число и показывает сумму его цифр.
 # Пример:
 # - 6782 -> 23
 # - 0,56 -> 11
 
-my_list = []
-numbers = str(input('Введите число чтобы узнать сумму его цифр: '))
-summa = 0
-point = 0
-for i in range(len(numbers)):
-    if numbers[i].isdigit(): 
-        my_list.append(int(str(numbers)[i]))
-        summa = summa + my_list[i-point]
-    else:  
-        point += 1
+def OneTask():
+    numbers = str(input('Введите число чтобы узнать сумму его цифр: '))
+    summa = 0
+    for char in numbers:
+        if char.isdigit():
+            summa += int(char)
+    print(summa)
 
-print(summa)
 
-# Напишите программу, которая принимает на вход число N и выдает набор произведений чисел от 1 до N.
+# 2 Задайте список из n чисел последовательности (1 + 1/n)**n и выведите на экран их сумму.
 # Пример:
-# - пусть N = 4, тогда [ 1, 2, 6, 24 ] (1, 1*2, 1*2*3, 1*2*3*4)
+# - Для n=4 -> [2, 2.25, 2.37, 2.44]
 
-n = int(input('Введите натуральное число '))
-numbers = 1
-while n <=0 : 
-    n = int(input('Введите натуральное число '))
+def TwoTask():
+    n = int(input(f'Введите количество чисел в списке последовательности (1 + 1/n)**n \n'
+                  'количество: '))
+    lst = [round((1+1/i)**i, 2) for i in range(1, n+1)]
+    print(f'Список {lst}, сумма чисел из списка {round(sum(lst), 2)}')
 
-for i in range(n):
-    i = i + 1
-    numbers = i * numbers
-    print(f'{numbers}', end=' ')
 
-print()
+# 3 Реализуйте алгоритм перемешивания списка.
+# НЕ ИСПОЛЬЗОВАТЬ ВСТРОЕННЫЕ БИБЛИОТЕКИ SHUFFLE, максимум
+# использование библиотеки Random для получения случайного int
 
-# Задайте список из n чисел последовательности $(1+\frac 1 n)^n$ и выведите на экран их сумму.
-# Пример:
+def TreeTask():
+    number = int(input('Задайте число для размера списка: '))
+    spisok = []
+    for i in range(number):
+        spisok.append(random.randint(0, 100))
+    print(spisok)
 
-# - Для n = 6: {1: 4, 2: 7, 3: 10, 4: 13, 5: 16, 6: 19}
+    for char in spisok*2:
+        p = spisok.pop(random.randint(0, number-1))
+        spisok.insert(random.randint(0, number-1), p)
 
-# Задайте список из N элементов, заполненных числами из промежутка [-N, N]. Найдите произведение элементов на указанных позициях. Позиции хранятся в файле file.txt в одной строке одно число.
-# Реализуйте алгоритм перемешивания списка.
-# my_list = []
+    print(spisok)
+
+
+# OneTask()
+# TwoTask()
+# TreeTask()
