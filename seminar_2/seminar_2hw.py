@@ -34,7 +34,8 @@ def TreeTask():
     for i in range(number):
         spisok.append(random.randint(0, 100))
     print(spisok)
-
+    spisok[::-1]
+    
     for char in spisok*2:
         p = spisok.pop(random.randint(0, number-1))
         spisok.insert(random.randint(0, number-1), p)
