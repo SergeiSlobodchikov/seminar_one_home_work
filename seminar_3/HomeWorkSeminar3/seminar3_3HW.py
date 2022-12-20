@@ -44,11 +44,23 @@ dictionary = \
 "Ф": 10, "Щ": 10, "Ъ": 10,
     }
 
+alphabetRu = {"а","б","в","г","д","е","ё","ж","з","и","й","к","л","м","н","о",
+            "п","р","с","т","у","ф","х","ц","ч","ш","щ","ъ","ы","ь","э","ю","я"}
+
+alphabetEn = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+             'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
+
+
 
 word = str(input('Введите слово для проверки очков в Скрабл ')).upper()
-my_list = list(word)
-summa = 0
-for i in my_list: 
-    summa = summa + dictionary[i]
+En = (bool(alphabetEn.intersection(set(word.lower()))))
+Ru = (bool(alphabetRu.intersection(set(word.lower()))))
+if En == Ru:
+    print('Вы ввели слово с разными языками')
+else:
+    my_list = list(word)
+    summa = 0
+    for i in my_list: 
+        summa = summa + dictionary[i]
 
-print(f'В Скрабл слово {word} наберет {summa}')
+    print(f'В Скрабл слово {word} наберет {summa}')
