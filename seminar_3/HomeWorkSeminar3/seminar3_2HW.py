@@ -13,7 +13,7 @@ n = int(input('Введите длину массива: '))
 x = int(input(f'Введите число, которое необходимо проверить '))
 massiveA = []
 for i in range(n):
-    random_number = round(random.randint(1, n*2))
+    random_number = round(random.randint(1, 20))
     massiveA.append(random_number)
 print(massiveA)
 
@@ -30,16 +30,21 @@ while condition:
                 break
         else:
             off = 1
-            
+    big = 0     
     if off == 1:
         for i in massiveA:
             if i == min or i == max: 
                 if i == min:
                     print(f'Самое близкое число {min}')
-                else:
-                    print(f'Самое близкое число {max}')
-                condition = False
-                break
+                    condition = False
+                    break
+                else: 
+                    big = 1
+        if big == 1:
+            print(f'Самое близкое число {max}')
+            condition = False
+            break
+
         min -= 1
         max += 1
 
