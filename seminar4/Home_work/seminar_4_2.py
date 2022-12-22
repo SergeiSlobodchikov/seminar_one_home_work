@@ -17,7 +17,7 @@
 import random 
 
 def Randoms_massiv(from_num, to_num):
-    n = int(input('Введите сколько кустов растет на круглой грядке '))
+    n = int(input('Введите сколько кустов черники растет на круглой грядке '))
     massive = []
     for i in range(n):
         random_number = round(random.randint(from_num, to_num))
@@ -26,11 +26,19 @@ def Randoms_massiv(from_num, to_num):
     return massive
 
 max = 0
-massiv = Randoms_massiv(1, 10)
+massiv = Randoms_massiv(1, 8)
+grydka_1 = massiv[0]
+grydka_2 = massiv[1]
+grydka_3 = massiv[2]
 for i in range(len(massiv)):
-    if max < massiv[0] +  massiv[1] + massiv[2]:
-        max = massiv[0] +  massiv[1] + massiv[2]
+    if max < massiv[0] + massiv[1] + massiv[2]:
+        max = massiv[0] + massiv[1] + massiv[2]
+        grydka_1 = massiv[0]
+        grydka_2 = massiv[1]
+        grydka_3 = massiv[2]
+
     p = massiv.pop(0)
     massiv.append(p)
 
-print(f'Максимальное число ягод может собрать {max}кг. за один заход собирающий модуль')
+print(f'Максимальное число ягод собирающий модуль может собрать {max} кг за один заход.')
+print(f'C главной грядки {grydka_2} кг и с соседних по {grydka_1} и {grydka_3} кг')
