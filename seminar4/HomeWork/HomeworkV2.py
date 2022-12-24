@@ -141,3 +141,6 @@ else:
         polynomialThree[i] = polynomialOnev2.get(i, 0) + polynomialTwov2.get(i, 0)
 print(f'Словарь сложения многочленов\n{polynomialThree}\n')
 print(f'Запись сложения многочленов\n{StringBeautiful(polynomialThree)}')
+data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialThree.txt', 'w')
+data.write(StringBeautiful(polynomialThree))
+data.close() 
