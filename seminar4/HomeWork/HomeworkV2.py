@@ -6,14 +6,14 @@
 
 # НЕОБЯЗАТЕЛЬНОЕ, ДОПОЛНИТЕЛЬНОЕ ЗАДАНИЕ:
 # Расширить значение коэффициентов до [-100..100]
-
 from random import randint
-def RandomPolynomial():
+
+def RandomPolynomial(): 
         dictionary = {}
         k = int(input('Введите число степени многочлена-> '))
         for i in range(k, -1, -1):
             dictionary[i] = randint(-100,100)
-        return dictionary
+        return dictionary  # Создаем словарь для степеней многочлена
 
 def StringBeautiful(dictionary: dict):
     my_str = ''
@@ -60,33 +60,23 @@ def StringBeautiful(dictionary: dict):
 
         count -= 1
     my_str += f' = 0'
-    return my_str  
-        
-polynomialOne = RandomPolynomial()
-data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialOne.txt', 'w')
-data.write(StringBeautiful(polynomialOne))
-data.close()
+    return my_str   # Из словаря в строку для красивого оформления многочленов
 
-polynomialTwo = RandomPolynomial()
-data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialTwo.txt', 'w')
-data.write(StringBeautiful(polynomialTwo))
-data.close()
+def ReplacePolynomial(data):
+    for line in data:
+        stroka = line
+    yravnenieOne = stroka.replace(' ','').replace('=0','').replace('+',' ').replace('-',' -').replace('x^',' .')
+    my_list = yravnenieOne.split()
+    data.close() 
+    return my_list        
 
-data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialOne.txt', 'r')
-for line in data:
-    stroka = line
-yravnenieOne = stroka.replace(' ','').replace('=0','').replace('+',' ').replace('-',' -').replace('x^',' .')
-my_list = yravnenieOne.split()
-data.close()
+def OpenAndWriteFile(data):    
+    polynomialOne = RandomPolynomial()
+    data.write(StringBeautiful(polynomialOne))
+    data.close() 
+    return polynomialOne
 
-data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialTwo.txt', 'r')
-for line in data:
-    stroka = line
-yravnenieTwo = stroka.replace(' ','').replace('=0','').replace('+',' ').replace('-',' -').replace('x^',' .')
-my_listTwo = yravnenieTwo.split()
-data.close()
-
-def Stroka(my_list: list):
+def StrokavSlovar(my_list: list):
     polynomialOnev1 = {}
     tochka = 0
     num = ''
@@ -119,18 +109,33 @@ def Stroka(my_list: list):
         count += 1
     return polynomialOnev1
 
-polynomialOnev1 = Stroka(my_list)
-print(polynomialOnev1)
-polynomialTwov2 = Stroka(my_listTwo)
-print(polynomialTwov2)
+data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialOne.txt', 'w')
+polynomialOne = OpenAndWriteFile(data)
+data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialTwo.txt', 'w')
+polynomialTwo = OpenAndWriteFile(data)
+
+print(f'Словарь первого многочлена \n{polynomialOne}\n')
+print(f'Словарь второго многочлена \n{polynomialTwo}\n')
+
+data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialOne.txt', 'r')
+my_list = ReplacePolynomial(data)
+data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialTwo.txt', 'r')
+my_listTwo = ReplacePolynomial(data)
+
+polynomialOnev2 = StrokavSlovar(my_list)
+polynomialTwov2 = StrokavSlovar(my_listTwo)
+
+print(f'Словарь первого многочлена из файла \n{polynomialOnev2}\n')
+print(f'Словарь второго многочлена из файла \n{polynomialTwov2}\n')
 
 polynomialThree = {}
 
-if len(polynomialOnev1) >= len(polynomialTwov2): 
-    for i in polynomialOnev1: 
-        polynomialThree[i] = polynomialOnev1.get(i, 0) + polynomialTwov2.get(i, 0)
+if len(polynomialOnev2) >= len(polynomialTwov2): 
+    for i in polynomialOnev2: 
+        polynomialThree[i] = polynomialOnev2.get(i, 0) + polynomialTwov2.get(i, 0)
 else:
     for i in polynomialTwov2: 
-        polynomialThree[i] = polynomialOnev1.get(i, 0) + polynomialTwov2.get(i, 0)
+        polynomialThree[i] = polynomialOnev2.get(i, 0) + polynomialTwov2.get(i, 0)
 
+print(f'Словарь сложения многочленов\n{polynomialThree}\n')
 print(f'Запись сложения многочленов\n{StringBeautiful(polynomialThree)}')
