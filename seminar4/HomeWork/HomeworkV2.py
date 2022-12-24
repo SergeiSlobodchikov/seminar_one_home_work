@@ -62,18 +62,75 @@ def StringBeautiful(dictionary: dict):
     my_str += f' = 0'
     return my_str  
         
-
-
 polynomialOne = RandomPolynomial()
-print(f'Первый многочлен\n{StringBeautiful(polynomialOne)}')
+data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialOne.txt', 'w')
+data.write(StringBeautiful(polynomialOne))
+data.close()
+
 polynomialTwo = RandomPolynomial()
-print(f'Второй многочлен\n{StringBeautiful(polynomialTwo)}')
+data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialTwo.txt', 'w')
+data.write(StringBeautiful(polynomialTwo))
+data.close()
+
+data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialOne.txt', 'r')
+for line in data:
+    stroka = line
+yravnenieOne = stroka.replace(' ','').replace('=0','').replace('+',' ').replace('-',' -').replace('x^',' .')
+my_list = yravnenieOne.split()
+data.close()
+
+data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialTwo.txt', 'r')
+for line in data:
+    stroka = line
+yravnenieTwo = stroka.replace(' ','').replace('=0','').replace('+',' ').replace('-',' -').replace('x^',' .')
+my_listTwo = yravnenieTwo.split()
+data.close()
+
+def Stroka(my_list: list):
+    polynomialOnev1 = {}
+    tochka = 0
+    num = ''
+    peremennay = 0
+    one = 0
+    zero = 0
+    count = 0
+    for i in my_list:
+        for j in i: 
+            if j == '.':
+                tochka = 1
+            elif tochka == 1:
+                num += str(j)
+            elif j == 'x':
+                one = 1
+
+        if tochka == 0: 
+            peremennay = i
+        elif tochka == 1:
+            polynomialOnev1[int(num)] = polynomialOnev1.get(int(num), 0) + int(peremennay)
+            num = ''
+            tochka = 0
+        if  one == 1:
+            peremennay = i.replace('x', '')
+            polynomialOnev1[1] = polynomialOnev1.get(1, 0) + int(peremennay)
+            one = 0
+        if count == len(my_list)-1:
+            peremennay = i
+            polynomialOnev1[0] = polynomialOnev1.get(0, 0) + int(peremennay)
+        count += 1
+    return polynomialOnev1
+
+polynomialOnev1 = Stroka(my_list)
+print(polynomialOnev1)
+polynomialTwov2 = Stroka(my_listTwo)
+print(polynomialTwov2)
+
 polynomialThree = {}
 
-if len(polynomialOne) >= len(polynomialTwo): 
-    for i in polynomialOne: 
-        polynomialThree[i] = polynomialOne.get(i, 0) + polynomialTwo.get(i, 0)
+if len(polynomialOnev1) >= len(polynomialTwov2): 
+    for i in polynomialOnev1: 
+        polynomialThree[i] = polynomialOnev1.get(i, 0) + polynomialTwov2.get(i, 0)
 else:
-    for i in polynomialTwo: 
-        polynomialThree[i] = polynomialOne.get(i, 0) + polynomialTwo.get(i, 0)
+    for i in polynomialTwov2: 
+        polynomialThree[i] = polynomialOnev1.get(i, 0) + polynomialTwov2.get(i, 0)
 
+print(f'Запись сложения многочленов\n{StringBeautiful(polynomialThree)}')
