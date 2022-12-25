@@ -11,62 +11,51 @@ def RandomPolynomial():
         dictionary = {}
         k = int(input('Введите число степени многочлена-> '))
         for i in range(k, -1, -1):
-            dictionary[i] = randint(-100,100)
+            dictionary[i] = randint(-100, 100)
         return dictionary  
 
 # Словарь пишем в строку для красивого оформления многочленов 
 def StringBeautiful(dictionary: dict):
-    my_str = ''
-    count = len(dictionary) - 1
-    step = len(dictionary) - 1
-    proverka = True
+    my_str = ' '
+    keys = dictionary.keys()
+    max = 0
+    for i in keys: 
+        if i > max:
+            max = i 
+    if dictionary.get(max, 0) < 0:
+        my_str = ' -'
 
-    while proverka:
-        if dictionary[step] == 0:
-            step -= 1
-        elif dictionary[step] != 0:
-            proverka = False
-
-    for k,v in dictionary.items(): 
-        if count == len(dictionary) - 1 and v < 0: 
-            my_str += ' -'
-
-        if k == 1:
-            if v == 0: 
-                my_str += ''
-            elif v == 1:
-                 my_str += 'x'
-            else:
-                my_str += f'{abs(v)}x' 
-        elif k == 0:
-            if v == 0: 
-                my_str += ''
-            else:
-                my_str += f'{abs(v)}'            
-        elif v == 0: 
+    for step in range(max,-1, -1):
+        znachenie = dictionary.get(step, 0)
+        if znachenie == 0:
             my_str += ''
-        elif v == 1: 
-            my_str += f'x^{k}'
         else: 
-            my_str += f'{abs(v)}x^{k}'
-
-        if count > 0 and count <= step:
-            if dictionary[count - 1] == 0:
-                my_str += ''
-            elif dictionary[count - 1] > 0:
+            if step == 0: 
+                my_str += f'{abs(znachenie)}'
+            elif step == 1:
+                if abs(znachenie) == 1:
+                    my_str += 'x'
+                else:
+                    my_str += f'{abs(znachenie)}x'
+            else:
+                if abs(znachenie) == 1:
+                    my_str += f'x^{step}'
+                else:
+                    my_str += f'{abs(znachenie)}x^{step}'
+        if step != 0 and dictionary.get(step - 1) != 0:
+            if dictionary.get(step - 1, 0) > 0:
                 my_str += ' + '
-            elif dictionary[count - 1] < 0:
+            elif dictionary.get(step - 1, 0) < 0:
                 my_str += ' - '
-
-        count -= 1
     my_str += f' = 0'
-    return my_str   
+    return my_str
+
 
 # Строку с примерами многочленов делаем в список удаляя лишние знаки
 def ReplacePolynomial(data):
     for line in data:
         stroka = line
-    yravnenieOne = stroka.replace(' ','').replace('=0','').replace('+',' ').replace('-',' -').replace('x^',' .')
+    yravnenieOne = stroka.replace('-x','-1').replace('- x','-1').replace(' x','1').replace(' ','').replace('=0','').replace('+',' ').replace('-',' -').replace('x^',' .').replace('^',' .')
     my_list = yravnenieOne.split()
     data.close() 
     return my_list        
@@ -85,45 +74,47 @@ def ListvSlovar(my_list: list):
     num = ''
     peremennay = 0
     one = 0
-    zero = 0
     count = 0
     for i in my_list:
-        for j in i: 
-            if j == '.':
-                tochka = 1
+        if i == 'x':
+            polynomialOnev1[count] = polynomialOnev1.get(count, 0) + 1 
+        else:
+            for j in i: 
+                if j == '.':
+                    tochka = 1
+                elif tochka == 1:
+                    num += str(j)
+                elif j == 'x':
+                    one = 1
+            
+            if  one == 1:
+                peremennay = i.replace('x', '')
+                polynomialOnev1[1] = polynomialOnev1.get(1, 0) + int(peremennay)
+                one = 0
+            if count == len(my_list)-1 and tochka != 1:
+                peremennay = i
+                polynomialOnev1[0] = polynomialOnev1.get(0, 0) + int(peremennay)
+            if tochka == 0: 
+                peremennay = i
             elif tochka == 1:
-                num += str(j)
-            elif j == 'x':
-                one = 1
-
-        if tochka == 0: 
-            peremennay = i
-        elif tochka == 1:
-            polynomialOnev1[int(num)] = polynomialOnev1.get(int(num), 0) + int(peremennay)
-            num = ''
-            tochka = 0
-        if  one == 1:
-            peremennay = i.replace('x', '')
-            polynomialOnev1[1] = polynomialOnev1.get(1, 0) + int(peremennay)
-            one = 0
-        if count == len(my_list)-1:
-            peremennay = i
-            polynomialOnev1[0] = polynomialOnev1.get(0, 0) + int(peremennay)
+                polynomialOnev1[int(num)] = polynomialOnev1.get(int(num), 0) + int(peremennay)
+                num = ''
+                tochka = 0
         count += 1
     return polynomialOnev1
 
 
-data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialOne.txt', 'w')
+data = open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialOne.txt', 'w')
 polynomialOne = OpenAndWriteFile(data)
-data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialTwo.txt', 'w')
+data = open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialTwo.txt', 'w')
 polynomialTwo = OpenAndWriteFile(data)
 # Печать словарей которые мы записали в файлы
 print(f'Словарь первого многочлена \n{polynomialOne}\n')
 print(f'Словарь второго многочлена \n{polynomialTwo}\n')
 
-data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialOne.txt', 'r')
+data = open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialOne.txt', 'r')
 my_list = ReplacePolynomial(data)
-data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialTwo.txt', 'r')
+data = open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialTwo.txt', 'r')
 my_listTwo = ReplacePolynomial(data)
 
 polynomialOnev2 = ListvSlovar(my_list)
@@ -133,14 +124,21 @@ print(f'Словарь первого многочлена из файла \n{po
 print(f'Словарь второго многочлена из файла \n{polynomialTwov2}\n')
 
 polynomialThree = {}
-if len(polynomialOnev2) >= len(polynomialTwov2): 
-    for i in polynomialOnev2: 
-        polynomialThree[i] = polynomialOnev2.get(i, 0) + polynomialTwov2.get(i, 0)
-else:
-    for i in polynomialTwov2: 
-        polynomialThree[i] = polynomialOnev2.get(i, 0) + polynomialTwov2.get(i, 0)
+keysOne = polynomialOnev2.keys()
+max = 0
+for i in keysOne: 
+    if i > max:
+        max = i 
+keysTwo = polynomialTwov2.keys()
+for i in keysTwo: 
+    if i > max:
+        max = i
+
+for step in range(max, -1, -1):
+    polynomialThree[step] = polynomialOnev2.get(step, 0) + polynomialTwov2.get(step, 0)
+
 print(f'Словарь сложения многочленов\n{polynomialThree}\n')
 print(f'Запись сложения многочленов\n{StringBeautiful(polynomialThree)}')
-data = open(r'C:\Users\Acer\Desktop\python\seminar4\HomeWork\polynomialThree.txt', 'w')
+data = open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialThree.txt', 'w')
 data.write(StringBeautiful(polynomialThree))
 data.close() 
