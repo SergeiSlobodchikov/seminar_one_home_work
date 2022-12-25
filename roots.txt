@@ -1,0 +1,18 @@
+32x ** 2 + 4x + -6
+The first root: 0.38
+The first root: -0.50
+32x ** 2 + 4x + -6
+The first root: 0.38
+The first root: -0.50
+32x ** 2 + 4x + -6
+The first root: 0.38
+The first root: -0.50
+3x ** 2 + -15x + 0
+The first root: 5.00
+The first root: 0.00
+3x ** 2 + -15x + 0
+The first root: 5.00
+The first root: 0.00
+3x ** 2 + -15x + 0
+The first root: 5.00
+The first root: 0.00
