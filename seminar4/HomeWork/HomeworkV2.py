@@ -55,7 +55,10 @@ def StringBeautiful(dictionary: dict):
 def ReplacePolynomial(data):
     for line in data:
         stroka = line
-    yravnenieOne = stroka.replace(' - x ',' -1 ^1 ').replace(' x ',' 1 ^1 ').replace('-x','-1').replace('- x','-1').replace(' x','1').replace(' ','').replace('=0','').replace('+',' ').replace('-',' -').replace('x^',' .').replace('^',' .').replace('x',' .1 ')
+    yravnenieOne = stroka.replace(' - x ',' -1 ^1 ').replace(' x ',' 1 ^1 ').replace('-x','-1')
+    yravnenieOne = yravnenieOne.replace('- x','-1').replace(' x','1').replace(' ','').replace('=0','')
+    yravnenieOne = yravnenieOne.replace('+',' ').replace('-',' -').replace('x^',' .')
+    yravnenieOne = yravnenieOne.replace('^',' .').replace('x',' .1 ')
     my_list = yravnenieOne.split()
     data.close() 
     return my_list        
@@ -93,22 +96,13 @@ def ListvSlovar(my_list: list):
         count += 1
     return polynomialOnev1
 
-
-data = open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialOne.txt', 'w')
-polynomialOne = OpenAndWriteFile(data)
-data = open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialTwo.txt', 'w')
-polynomialTwo = OpenAndWriteFile(data)
+polynomialOne = OpenAndWriteFile(open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialOne.txt', 'w'))
+polynomialTwo = OpenAndWriteFile(open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialTwo.txt', 'w'))
 # Печать словарей которые мы записали в файлы
 print(f'Словарь первого многочлена \n{polynomialOne}\n')
 print(f'Словарь второго многочлена \n{polynomialTwo}\n')
-
-data = open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialOne.txt', 'r')
-my_list = ReplacePolynomial(data)
-data = open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialTwo.txt', 'r')
-my_listTwo = ReplacePolynomial(data)
-print(my_list)
-print(my_listTwo)
-print()
+my_list = ReplacePolynomial(open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialOne.txt', 'r'))
+my_listTwo = ReplacePolynomial(open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialTwo.txt', 'r'))
 polynomialOnev2 = ListvSlovar(my_list)
 polynomialTwov2 = ListvSlovar(my_listTwo)
 # Печать словарей которые мы вытащили из файла
@@ -118,8 +112,6 @@ print(f'Словарь второго многочлена из файла \n{po
 polynomialThree = {}
 polynomialThree.update(polynomialOnev2)
 polynomialThree.update(polynomialTwov2)
-
-
 for step in polynomialThree:
     polynomialThree[step] = polynomialOnev2.get(step, 0) + polynomialTwov2.get(step, 0)
 
