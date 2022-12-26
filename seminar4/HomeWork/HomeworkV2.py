@@ -55,7 +55,7 @@ def StringBeautiful(dictionary: dict):
 def ReplacePolynomial(data):
     for line in data:
         stroka = line
-    yravnenieOne = stroka.replace('-x','-1').replace('- x','-1').replace(' x','1').replace(' ','').replace('=0','').replace('+',' ').replace('-',' -').replace('x^',' .').replace('^',' .')
+    yravnenieOne = stroka.replace(' - x ',' -1 ^1 ').replace(' x ',' 1 ^1 ').replace('-x','-1').replace('- x','-1').replace(' x','1').replace(' ','').replace('=0','').replace('+',' ').replace('-',' -').replace('x^',' .').replace('^',' .').replace('x',' .1 ')
     my_list = yravnenieOne.split()
     data.close() 
     return my_list        
@@ -76,30 +76,20 @@ def ListvSlovar(my_list: list):
     one = 0
     count = 0
     for i in my_list:
-        if i == 'x':
-            polynomialOnev1[count] = polynomialOnev1.get(count, 0) + 1 
-        else:
-            for j in i: 
-                if j == '.':
-                    tochka = 1
-                elif tochka == 1:
-                    num += str(j)
-                elif j == 'x':
-                    one = 1
-            
-            if  one == 1:
-                peremennay = i.replace('x', '')
-                polynomialOnev1[1] = polynomialOnev1.get(1, 0) + int(peremennay)
-                one = 0
-            if count == len(my_list)-1 and tochka != 1:
-                peremennay = i
-                polynomialOnev1[0] = polynomialOnev1.get(0, 0) + int(peremennay)
-            if tochka == 0: 
-                peremennay = i
+        for j in i: 
+            if j == '.':
+                tochka = 1
             elif tochka == 1:
-                polynomialOnev1[int(num)] = polynomialOnev1.get(int(num), 0) + int(peremennay)
-                num = ''
-                tochka = 0
+                num += str(j)      
+        if count == len(my_list)-1 and tochka != 1:
+            peremennay = i
+            polynomialOnev1[0] = polynomialOnev1.get(0, 0) + int(peremennay)
+        if tochka == 0: 
+            peremennay = i
+        elif tochka == 1:
+            polynomialOnev1[int(num)] = polynomialOnev1.get(int(num), 0) + int(peremennay)
+            num = ''
+            tochka = 0
         count += 1
     return polynomialOnev1
 
@@ -116,7 +106,9 @@ data = open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialOne.t
 my_list = ReplacePolynomial(data)
 data = open(r'C:\Users\Acer\Desktop\python_dopolnitelnoe_zadanie\polynomialTwo.txt', 'r')
 my_listTwo = ReplacePolynomial(data)
-
+print(my_list)
+print(my_listTwo)
+print()
 polynomialOnev2 = ListvSlovar(my_list)
 polynomialTwov2 = ListvSlovar(my_listTwo)
 # Печать словарей которые мы вытащили из файла
@@ -124,17 +116,11 @@ print(f'Словарь первого многочлена из файла \n{po
 print(f'Словарь второго многочлена из файла \n{polynomialTwov2}\n')
 
 polynomialThree = {}
-keysOne = polynomialOnev2.keys()
-max = 0
-for i in keysOne: 
-    if i > max:
-        max = i 
-keysTwo = polynomialTwov2.keys()
-for i in keysTwo: 
-    if i > max:
-        max = i
+polynomialThree.update(polynomialOnev2)
+polynomialThree.update(polynomialTwov2)
 
-for step in range(max, -1, -1):
+
+for step in polynomialThree:
     polynomialThree[step] = polynomialOnev2.get(step, 0) + polynomialTwov2.get(step, 0)
 
 print(f'Словарь сложения многочленов\n{polynomialThree}\n')
