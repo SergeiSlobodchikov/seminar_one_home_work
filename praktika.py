@@ -103,31 +103,31 @@
 # else:
 #     print(f'Петя что напутал такой пары нет')
 
-i = 4
-if i / 2:
-    print(i, 'чётное1')
-else:
-    print(i, 'нечётное1')
-if i // 2:
-    print(i, 'чётное2')
-else:
-    print(i, 'нечётное2')
-if i % 2 == 0:
-    print(i, 'чётное3')
-else:
-    print(i, 'нечётное3')
-if i // 2 == 0:
-    print(i, 'чётное4')
-else:
-    print(i, 'нечётное4')
-if i % 2 != 0:
-    print(i, 'нечётное5')
-else:
-    print(i, 'чётное5')
-if i // 2 != 0:
-    print(i, 'нечётное6')
-else:
-    print(i, 'чётное6')
+# i = 4
+# if i / 2:
+#     print(i, 'чётное1')
+# else:
+#     print(i, 'нечётное1')
+# if i // 2:
+#     print(i, 'чётное2')
+# else:
+#     print(i, 'нечётное2')
+# if i % 2 == 0:
+#     print(i, 'чётное3')
+# else:
+#     print(i, 'нечётное3')
+# if i // 2 == 0:
+#     print(i, 'чётное4')
+# else:
+#     print(i, 'нечётное4')
+# if i % 2 != 0:
+#     print(i, 'нечётное5')
+# else:
+#     print(i, 'чётное5')
+# if i // 2 != 0:
+#     print(i, 'нечётное6')
+# else:
+#     print(i, 'чётное6')
 
 # import random
 
@@ -169,3 +169,11 @@ else:
 
 
 # print( s)
+
+
+num = []
+num.append(int(input()))
+num.append(int(input()))
+num.append(int(input()))
+num.sort()
+print(num)
