@@ -14,6 +14,7 @@ def ThreeTask():
                 my_list.append(int(number))
             else:
                 my_list.append(number)
+            print(my_list)
         return my_list                      # Создал массив и заполнил его случайными числами
 
     def ListFraction(my_list):
@@ -38,4 +39,20 @@ def ThreeTask():
     fraction = ListFraction(randomList)
     maximum, minimum, difference = MaxAndMin(fraction)
     print(f'{randomList} \nmax {round(maximum, 3)} min {round(minimum, 3)} разница {round(difference, 3)}')
-ThreeTask()
+# ThreeTask()
+
+
+def ThreeTaskV2():
+    my_list1 = [round(random.uniform(0, 10), random.randint(0, 3)) for _ in range(10)]
+    my_list = [my_list1[x]% 1 for x in range(len(my_list1)) if my_list1[x] != int(my_list1[x])]
+    maximum = my_list[0]
+    minimum = my_list[0]
+    for i in range(len(my_list)):
+        if maximum < my_list[i]:
+            maximum = my_list[i]
+        elif minimum > my_list[i]:
+            minimum = my_list[i]
+    difference = maximum - minimum
+    print(f'{my_list1} \nmax {round(maximum, 3)} min {round(minimum, 3)} разница {round(difference, 3)}')
+    
+ThreeTaskV2()

@@ -16,4 +16,13 @@ def TwoTask():
         my_list2.append(my_list[i] * my_list[-(i+1)])
     print(f'список {my_list}  \nпроизведение пар чисел {my_list2}')
 
-TwoTask()
+# TwoTask()
+
+def TwoTaskV2():
+    my_list = [random.randint(0, 10) for _ in range(random.randint(5, 10))]
+    print(f'список {my_list}') 
+    expression = lambda x, y: x * y
+    new_list = [expression(my_list[i], my_list[-(i+1)]) for i in range((len(my_list)+1)//2)]
+    print(new_list)
+
+TwoTaskV2()

@@ -7,8 +7,9 @@ def FiveTask():
     my_list = [0, 1]
     minus_list = [0, 1]
     for i in range(number-1):
-        my_list.append(my_list[i]+my_list[i+1])
-        minus_list.append(minus_list[i]+minus_list[i+1])
+        my_list.append(my_list[i] + my_list[i+1])
+        minus_list.append(minus_list[i] + minus_list[i+1])
+        
 
     for i in range(1, number+1): 
         if not i % 2:
