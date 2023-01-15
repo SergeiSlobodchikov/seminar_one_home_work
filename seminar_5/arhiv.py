@@ -32,6 +32,7 @@ def Rasarhiv(textA):
     return new_text
 
 
+
 # Открываем файл и читаем из него строку
 with open(r'file.txt', 'r') as data:
     text = data.read()

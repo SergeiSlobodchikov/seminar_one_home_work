@@ -28,4 +28,16 @@ def OneTaskV2():
         my_list.pop(i)
     print(f'Сумма элементов нечетного индекса {my_list[0]}')
 
+def OneTaskV3():
+    my_list = [random.randint(0, 10) for _ in range(random.randint(5, 10))]
+    print(f'список {my_list}')
+    my_list = list(filter(lambda x : x % 2 != 0, my_list))
+    while len(my_list) != 1:
+        i = 1
+        my_list[i-1] = my_list[i] + my_list[i-1]
+        my_list.pop(i)
+    print(f'Сумма элементов нечетных чисел {my_list[0]}')
+
 OneTaskV2()
+OneTaskV3()
+
