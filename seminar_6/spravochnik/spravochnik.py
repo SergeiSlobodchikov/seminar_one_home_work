@@ -43,13 +43,17 @@ def readFile(file_name):
     return result
 
 
-def findUsers(userList):
-    search = input(f'Введите данные: ') 
-    for user in userList:
-        for data in user:
-            if search == data:
-                print(' '.join(user))
-    input("Enter для выхода: ")
+def search_data():
+    clear_screen()
+    while(True):
+        answer = input('Строка поиска(\'\'-выход) :>')
+        if answer=="": return
+        result=[]
+        with open(fileName,'r',encoding='utf8') as datafile:
+            for line in datafile:
+                result.append(line.strip('\n'))
+            result = list(filter(lambda line:answer in line , result))
+        print(' '.join(result))
 
 
 def print_all_data():
@@ -119,7 +123,7 @@ while (True):
 
         case "3":
             # поиск
-            findUsers(readFile(fileName))
+            search_data()
         case "4":
             # удаление данных
             del_data()
