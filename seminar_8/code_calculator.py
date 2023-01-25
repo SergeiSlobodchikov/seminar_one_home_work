@@ -1,31 +1,10 @@
-# Вычислить значение выражения:
-# 12 + 15
-# 12 / 15
-# 112 * 15
-
-# 1. Где операторы?
-# 2. Где числовые значения?
-
-# Уровень 1:
-# - 1 действие
-# - 2 аргумента
-
-# Уровень 2:
-# - Количество действие произвольное
-# 12 + 15 - 4
-
-
-# Уровень 3:
-# - Действия имеют приоритет
-# 12 - 4*2
-
 # Уровень 4:
 # - Действия разделяются скобками
 # (12 - 4) * 2
 
 def split_string(stroka: str):
-  string = stroka.replace(' ', '').replace('+', ' + ').replace('*-', ' * -').replace('/-', ' / -')
-  string = string.replace('*', ' * ').replace('/', ' / ').replace('(', '( ').replace(')', ' )')
+  string = stroka.replace(' ', '').replace('+', ' + ').replace('*-', ' * -').replace('/-', ' / -').replace('^-', ' ^ -').replace('-(', ' + -1 * (')
+  string = string.replace('*', ' * ').replace('/', ' / ').replace(')-', ' ) + -').replace('(', ' ( ').replace(')', ' ) ').replace(')', ' ) ').replace('^', ' ^ ')
   number = '0123456789'
   for i in number:
     string = string.replace(f'{i}-', f'{i} + -')
@@ -33,7 +12,6 @@ def split_string(stroka: str):
   if my_list[0] == '-':
     my_list[0] = float(my_list[1])*(-1)
     my_list.pop(1)
-  print(my_list)
   return my_list
 
 def calculator(my_list: list):
@@ -46,17 +24,37 @@ def calculator(my_list: list):
           return a / b
       elif ch == '*':
           return a * b
+      elif ch == '^':
+          return a ** b
+
+  def zero_test(m: list):
+    result = 0
+    popp = 0
+    finish = len(m)
+    for i in range(finish - popp):
+      if m[i] == '^':
+        if m[i-1] != ')':
+          result = calc(float(m[i-1]) , float(m[i+1]), (m[i]))
+          m[i-1] = result
+          m.pop(i)
+          m.pop(i)
+          popp += 2
+          break
+    return m
 
   def one_test(m: list):
     start = 0
     finish = 0
     result = 0
     popp = 0
+    finish_1 = 0
     for i in range(len(m)):
       if m[i] == '(':
         start = i+1
-      elif m[i] == ')':
+      elif m[i] == ')' and finish_1 == 0:
         finish = i-1
+        finish_1 = 1
+        break
     for j in range(start+1, finish - popp, 2):
         for i in range(start+1, finish - popp, 2):
           if m[i] == '*' or m[i] == '/':
@@ -75,8 +73,9 @@ def calculator(my_list: list):
         m.pop(a+1)
         m.pop(a-1)
         popp += 2
-    m.pop(a)
-    m.pop(a-2)
+        break
+    m.pop(start-1)
+    m.pop(finish-popp)
     return m
 
   def testTwo(m: list):
@@ -105,8 +104,13 @@ def calculator(my_list: list):
       m.pop(a+1)
     return m
 
+  for i in range(len(my_list)):
+    zero_test(my_list)
   while  '(' in my_list:
-    one_test(my_list)  
+    one_test(my_list)
+  while '^' in my_list:
+    zero_test(my_list)
+  zero_test(my_list) 
   testTwo(my_list)
   testThree(my_list)
   return my_list
